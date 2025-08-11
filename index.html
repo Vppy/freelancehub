@@ -1,0 +1,296 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreelanceHub - Connect Talent with Opportunity</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-briefcase"></i>
+                <span>FreelanceHub</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#" class="nav-link" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="browse">Browse Projects</a>
+                <a href="#" class="nav-link" data-page="dashboard" id="dashboardLink" style="display: none;">Dashboard</a>
+                <a href="#" class="nav-link" data-page="profile" id="profileLink" style="display: none;">Profile</a>
+            </div>
+            <div class="nav-auth">
+                <button class="btn btn-secondary" onclick="showAuthModal('login')">Sign In</button>
+                <button class="btn btn-primary" onclick="showAuthModal('register')">Join Now</button>
+                <div id="userMenu" style="display: none;" class="user-menu">
+                    <img id="userAvatar" src="" alt="User Avatar" class="avatar">
+                    <span id="userName"></span>
+                    <button onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Find Your Perfect Freelance Match</h1>
+                <p>Connect with top freelancers or discover your next big project</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="showAuthModal('register')">Get Started</button>
+                    <button class="btn btn-outline" onclick="showPage('browse')">Browse Projects</button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number" data-count="50000">0</span>
+                    <span class="stat-label">Freelancers</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-count="25000">0</span>
+                    <span class="stat-label">Projects</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-amount="2500000">$0</span>
+                    <span class="stat-label">Paid Out</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-user-tie"></i>
+                <h3>Find Talent</h3>
+                <p>Browse through skilled freelancers across various domains</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Get Work Done</h3>
+                <p>Post your projects and get proposals from qualified professionals</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <p>Secure payments and verified profiles for peace of mind</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Browse Projects Page -->
+    <div id="browsePage" class="page">
+        <div class="page-header">
+            <h2>Browse Projects</h2>
+            <button id="postProjectBtn" class="btn btn-primary" style="display: none;" onclick="showPostProject()">
+                <i class="fas fa-plus"></i> Post Project
+            </button>
+        </div>
+        <div class="filters">
+            <input type="text" placeholder="Search projects..." id="projectSearch">
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="web">Web Development</option>
+                <option value="mobile">Mobile Development</option>
+                <option value="design">Design</option>
+                <option value="writing">Writing</option>
+                <option value="marketing">Marketing</option>
+            </select>
+            <select id="budgetFilter">
+                <option value="">All Budgets</option>
+                <option value="0-100">$0 - $100</option>
+                <option value="100-500">$100 - $500</option>
+                <option value="500-1000">$500 - $1,000</option>
+                <option value="1000+">$1,000+</option>
+            </select>
+        </div>
+        <div id="projectsContainer" class="projects-container">
+            <!-- Projects will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="page">
+        <div class="dashboard-header">
+            <h2 id="dashboardTitle">Dashboard</h2>
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="overview">Overview</button>
+                <button class="tab-btn" data-tab="projects">Projects</button>
+                <button class="tab-btn" data-tab="bids">Bids</button>
+                <button class="tab-btn" data-tab="reviews">Reviews</button>
+            </div>
+        </div>
+        
+        <div id="overviewTab" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Projects</h3>
+                    <p id="totalProjects">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Projects</h3>
+                    <p id="activeProjects">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Completed Projects</h3>
+                    <p id="completedProjects">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Earnings</h3>
+                    <p id="totalEarnings">$0</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="projectsTab" class="tab-content">
+            <div id="userProjects" class="projects-list">
+                <!-- Projects will be loaded here -->
+            </div>
+        </div>
+
+        <div id="bidsTab" class="tab-content">
+            <div id="userBids" class="bids-list">
+                <!-- Bids will be loaded here -->
+            </div>
+        </div>
+
+        <div id="reviewsTab" class="tab-content">
+            <div id="userReviews">
+                <!-- Reviews will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profilePage" class="page">
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img id="profileAvatar" src="" alt="Profile">
+                        <button class="avatar-upload" onclick="uploadAvatar()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <div class="profile-info">
+                        <h2 id="profileName">Your Name</h2>
+                        <p id="profileRole" class="role-badge">Loading...</p>
+                    </div>
+                    <button class="edit-profile-btn" onclick="editProfile()">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </div>
+
+                <div class="profile-details">
+                    <div id="freelancerSection" style="display: none;">
+                        <div class="profile-section">
+                            <h3>Skills</h3>
+                            <div id="skillsContainer" class="skills-container">
+                                <button class="add-skill-btn" onclick="addSkill()">
+                                    <i class="fas fa-plus"></i> Add Skill
+                                </button>
+                            </div>
+                        </div>
+                        <div class="profile-section">
+                            <h3>Portfolio</h3>
+                            <div id="portfolioContainer" class="portfolio-container">
+                                <button class="add-portfolio-btn" onclick="addPortfolio()">
+                                    <i class="fas fa-plus"></i> Add Work
+                                </button>
+                            </div>
+                        </div>
+                        <div class="profile-section">
+                            <h3>Experience</h3>
+                            <p id="experience" class="editable" contenteditable="false">Describe your experience...</p>
+                        </div>
+                    </div>
+
+                    <div id="clientSection" style="display: none;">
+                        <div class="profile-section">
+                            <h3>Contact Info</h3>
+                            <p><i class="fas fa-envelope"></i> <span id="contactEmail">email@example.com</span></p>
+                            <p><i class="fas fa-phone"></i> <span id="contactPhone">Add phone number</span></p>
+                        </div>
+                        <div class="profile-section">
+                            <h3>Company</h3>
+                            <p id="companyName" class="editable" contenteditable="false">Your Company Name</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeAuthModal()">&times;</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+            </div>
+            
+            <div id="loginForm" class="auth-form active">
+                <h2>Welcome Back</h2>
+                <form onsubmit="login(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+            </div>
+
+            <div id="registerForm" class="auth-form">
+                <h2>Join FreelanceHub</h2>
+                <form onsubmit="register(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>I am a</label>
+                        <select name="role" required onchange="toggleRoleFields(event)">
+                            <option value="">Select role</option>
+                            <option value="freelancer">Freelancer</option>
+                            <option value="client">Client</option>
+                        </select>
+                    </div>
+                    <div id="passwordFields" style="display: none;">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" name="confirm-password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Detail Modal -->
+    <div id="projectDetailModal" class="modal">
+        <div class="modal-content large">
+            <button class="close-modal" onclick="closeProjectModal()">&times;</button>
+            <div id="projectDetailContent">
+                <!-- Project details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
