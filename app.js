@@ -302,6 +302,18 @@ function openProjectModal(projectId) {
     modal.style.display = 'block';
 }
 
+function bidOnProject(projectID) {
+    closeProjectModal();
+    const project = projects.find(p => p.id === projectID);
+
+    // Ensure the 'totalProjects' element exists and update its value
+    const totalProjectsElement = document.getElementById('totalProjects');
+    if (totalProjectsElement) {
+        const currentTotal = parseInt(totalProjectsElement.textContent.trim(), 10) || 0;
+        totalProjectsElement.textContent = currentTotal + 1;
+    }
+}
+
 function closeProjectModal() {
     document.getElementById('projectDetailModal').style.display = 'none';
 }
